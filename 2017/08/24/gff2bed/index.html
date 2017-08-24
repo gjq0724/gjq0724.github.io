@@ -5,7 +5,7 @@
   
 
 
-<html class="theme-next gemini use-motion" lang="zh-Hans">
+<html class="theme-next pisces use-motion" lang="zh-Hans">
 <head>
   <meta charset="UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -22,7 +22,6 @@
 
 <meta http-equiv="Cache-Control" content="no-transform" />
 <meta http-equiv="Cache-Control" content="no-siteapp" />
-
 
 
 
@@ -103,7 +102,7 @@
 <meta property="og:site_name" content="The Future Is In Our Hands">
 <meta property="og:description" content="BED 文件格式提供了一种灵活的方式来定义的数据行，以用来描述注释的信息。BED行有3个必须的列和9个额外可选的列。 每行的数据格式要求一致。通常所见的bed文件为6列，但是一些软件要求输入12列bed文件(UCSC  Genome Browser)，通过探索研究出一下两种从gff3/gtf转为12列bed文件的方法。 ##GFFtools-GX GFFtools-GX是vipints分享在Git">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2017-08-24T08:49:05.896Z">
+<meta property="og:updated_time" content="2017-08-24T11:56:53.935Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="gff2bed">
 <meta name="twitter:description" content="BED 文件格式提供了一种灵活的方式来定义的数据行，以用来描述注释的信息。BED行有3个必须的列和9个额外可选的列。 每行的数据格式要求一致。通常所见的bed文件为6列，但是一些软件要求输入12列bed文件(UCSC  Genome Browser)，通过探索研究出一下两种从gff3/gtf转为12列bed文件的方法。 ##GFFtools-GX GFFtools-GX是vipints分享在Git">
@@ -114,8 +113,7 @@
   var NexT = window.NexT || {};
   var CONFIG = {
     root: '/',
-    scheme: 'Gemini',
-    version: '5.1.2',
+    scheme: 'Pisces',
     sidebar: {"position":"left","display":"post","offset":12,"offset_float":12,"b2t":false,"scrollpercent":false,"onmobile":false},
     fancybox: true,
     tabs: true,
@@ -152,6 +150,12 @@
 
 
 
+
+
+
+
+
+
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -161,9 +165,9 @@
     
   
 
-  <div class="container sidebar-position-left page-post-detail">
+  <div class="container sidebar-position-left page-post-detail ">
     <div class="headband"></div>
-    <a href="https://github.com/gjq0724/gjq0724.github.io"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://camo.githubusercontent.com/38ef81f8aca64bb9a64448d0d70f1308ef5341ab/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f6461726b626c75655f3132313632312e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png"></a>
+    <a href="https://github.com/gjq0724/gjq0724.github.io"><img style="position: absolute; top: 0; left: 0; border: 0;" src="https://camo.githubusercontent.com/567c3a48d796e2fc06ea80409cc9dd82bf714434/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f6c6566745f6461726b626c75655f3132313632312e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_left_darkblue_121621.png"></a>
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
       <div class="header-inner"><div class="site-brand-wrapper">
   <div class="site-meta ">
@@ -223,6 +227,16 @@
               <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
             
             关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
           </a>
         </li>
       
@@ -343,7 +357,7 @@
 <li><p>在<code>GitHub</code>上，<code>vipints</code>分享了一种使用方式，该方式需要在本地先配置<code>Galaxy Tool shed</code>(具体配置看<a href="https://toolshed.g2.bx.psu.edu/" target="_blank" rel="external">网站说明</a>，并安装了python2.6或者2.7以及biopython。配置完成后，使用一下命令调用该软件包:</p>
 <figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sh run_functional_tests.sh -id fml_gtf2gff</div></pre></td></tr></table></figure>
 </li>
-<li><p>另一种方式是将软件包下载下来，直接调用软件包中的脚本:</p>
+<li><p>另一种方式是将软件包下载下来，直接调用软件包中的脚本</p>
 <figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#Convert genome annotation data in GFF/GTF to a 12 column BED format. BED format typically represents the transcript models. </span></div><div class="line">Usage: python gff_to_bed.py in.gff &gt; out.bed</div><div class="line">       python gtf_to_bed.py in.gtf &gt; out.bed</div></pre></td></tr></table></figure>
 </li>
 </ul>
@@ -366,6 +380,16 @@
     
     
     
+      <div>
+        
+        <div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------------本文结束<i class="fa fa-paw"></i>感谢您的阅读-------------</div>
+    
+</div>
+
+        
+      </div>
 
     
 
@@ -377,7 +401,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/gfftools/" rel="tag"># gfftools</a>
+            <a href="/tags/gfftools/" rel="tag"><i class="fa fa-tag"></i> gfftools</a>
           
         </div>
       
@@ -465,15 +489,22 @@
 
           
             <div class="site-state-item site-state-posts">
-            
-              <a href="/archives">
-            
-                <span class="site-state-item-count">2</span>
+              <a href="/archives/">
+                <span class="site-state-item-count">3</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
           
 
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">1</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
           
 
           
@@ -481,7 +512,7 @@
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">2</span>
+                <span class="site-state-item-count">3</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
@@ -520,9 +551,7 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
-</script>
-<div class="copyright" >
+        <div class="copyright" >
   
   &copy; 
   <span itemprop="copyrightYear">2017</span>
@@ -530,19 +559,22 @@
     <i class="fa fa-heart"></i>
   </span>
   <span class="author" itemprop="copyrightHolder">Guo Junqiang</span>
-
-  
 </div>
 
 
+<!--<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>-->
+
 
         
-
-
-
-
-
-
 
         
       </div>
@@ -634,16 +666,14 @@
 <script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
 
 
-  
+
   
 
 
   <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script>
 
 
-  
-  <script type="text/javascript" src="//cdn.bootcss.com/canvas-nest.js/1.0.0/canvas-nest.min.js"></script>
-  
+
   
 
 
@@ -665,8 +695,6 @@
 
 
   
-
-
 
 
 
