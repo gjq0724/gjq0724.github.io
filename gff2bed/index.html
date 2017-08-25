@@ -1,0 +1,800 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+  
+  
+    
+    
+  <script src="/lib/pace/pace.min.js?v=1.0.2"></script>
+  <link href="/lib/pace/pace-theme-minimal.min.css?v=1.0.2" rel="stylesheet">
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="gfftools," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.2" />
+
+
+
+
+
+
+<meta name="description" content="BED 文件格式提供了一种灵活的方式来定义的数据行，以用来描述注释的信息。BED行有3个必须的列和9个额外可选的列。 每行的数据格式要求一致。通常所见的bed文件为6列，但是一些软件要求输入12列bed文件(UCSC  Genome Browser)，通过探索研究出一下两种从gff3/gtf转为12列bed文件的方法。 ##GFFtools-GX GFFtools-GX是vipints分享在Git">
+<meta name="keywords" content="gfftools">
+<meta property="og:type" content="article">
+<meta property="og:title" content="gff2bed">
+<meta property="og:url" content="http://gjq0724.github.io/gff2bed/index.html">
+<meta property="og:site_name" content="The Future is in Our Hands">
+<meta property="og:description" content="BED 文件格式提供了一种灵活的方式来定义的数据行，以用来描述注释的信息。BED行有3个必须的列和9个额外可选的列。 每行的数据格式要求一致。通常所见的bed文件为6列，但是一些软件要求输入12列bed文件(UCSC  Genome Browser)，通过探索研究出一下两种从gff3/gtf转为12列bed文件的方法。 ##GFFtools-GX GFFtools-GX是vipints分享在Git">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2017-08-25T06:03:35.202Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="gff2bed">
+<meta name="twitter:description" content="BED 文件格式提供了一种灵活的方式来定义的数据行，以用来描述注释的信息。BED行有3个必须的列和9个额外可选的列。 每行的数据格式要求一致。通常所见的bed文件为6列，但是一些软件要求输入12列bed文件(UCSC  Genome Browser)，通过探索研究出一下两种从gff3/gtf转为12列bed文件的方法。 ##GFFtools-GX GFFtools-GX是vipints分享在Git">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: true,
+    duoshuo: {
+      userId: 'undefined',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://gjq0724.github.io/gff2bed/"/>
+
+
+
+
+
+  <title>gff2bed | The Future is in Our Hands</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+    <a href="https://github.com/gjq0724/"><img style="position: absolute; top: 0; left: 0; border: 0;" src="https://camo.githubusercontent.com/567c3a48d796e2fc06ea80409cc9dd82bf714434/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f6c6566745f6461726b626c75655f3132313632312e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_left_darkblue_121621.png"></a>
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">The Future is in Our Hands</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://gjq0724.github.io/gff2bed/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Guo Junqiang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="The Future is in Our Hands">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">gff2bed</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-08-24T16:12:54+08:00">
+                2017-08-24
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/project/" itemprop="url" rel="index">
+                    <span itemprop="name">project</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+            
+            <span id="/gff2bed/" class="leancloud_visitors" data-flag-title="gff2bed">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+
+            <span class="page-pv">
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+            </span>
+         </span>
+          
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p><em>BED 文件格式提供了一种灵活的方式来定义的数据行，以用来描述注释的信息。BED行有3个必须的列和9个额外可选的列。 每行的数据格式要求一致。通常所见的bed文件为6列，但是一些软件要求输入12列bed文件(UCSC  Genome Browser)，通过探索研究出一下两种从gff3/gtf转为12列bed文件的方法。</em></p>
+<p>##GFFtools-GX</p>
+<p><code>GFFtools-GX</code>是<code>vipints</code>分享在<a href="https://github.com/vipints/GFFtools-GX.git" target="_blank" rel="external">GitHub</a>上的一个程序集，里面包含了gff、gtf、gbk、bed格式之间的相互转换。</p>
+<ul>
+<li><p>在<code>GitHub</code>上，<code>vipints</code>分享了一种使用方式，该方式需要在本地先配置<code>Galaxy Tool shed</code>(具体配置看<a href="https://toolshed.g2.bx.psu.edu/" target="_blank" rel="external">网站说明</a>，并安装了python2.6或者2.7以及biopython。配置完成后，使用一下命令调用该软件包:</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sh run_functional_tests.sh -id fml_gtf2gff</div></pre></td></tr></table></figure>
+</li>
+<li><p>另一种方式是将软件包下载下来，直接调用软件包中的脚本</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#Convert genome annotation data in GFF/GTF to a 12 column BED format. BED format typically represents the transcript models. </span></div><div class="line">Usage: python gff_to_bed.py in.gff &gt; out.bed</div><div class="line">       python gtf_to_bed.py in.gtf &gt; out.bed</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>直接下载的软件包中的<code>gff_to_bed.py</code>在运行时会出现以下报错，<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">TypeError: len() of unsized object</div></pre></td></tr></table></figure></p>
+<p>在<code>GitHub</code>上<code>tzintzuni</code>给出了解决方法，修改<code>gff_to_bed.py</code>文件，将以下代码<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">writeBED</span><span class="params">(tinfo)</span>:</span></div><div class="line">    <span class="string">"""</span></div><div class="line"><span class="string">    writing result files in bed format </span></div><div class="line"><span class="string">    @args tinfo: list of genes </span></div><div class="line"><span class="string">    @type tinfo: numpy object  </span></div><div class="line"><span class="string">    """</span></div><div class="line"></div><div class="line">    <span class="keyword">for</span> ent1 <span class="keyword">in</span> tinfo:</div><div class="line">        child_flag = <span class="keyword">False</span>  </div><div class="line"></div><div class="line">        <span class="keyword">for</span> idx, tid <span class="keyword">in</span> enumerate(ent1[<span class="string">'transcripts'</span>]):</div><div class="line">            child_flag = <span class="keyword">True</span> </div><div class="line">            exon_cnt = len(ent1[<span class="string">'exons'</span>][idx])</div><div class="line">            exon_len = <span class="string">''</span></div><div class="line">            exon_cod = <span class="string">''</span> </div><div class="line">            rel_start = <span class="keyword">None</span> </div><div class="line">            rel_stop = <span class="keyword">None</span> </div><div class="line">            <span class="keyword">for</span> idz, ex_cod <span class="keyword">in</span> enumerate(ent1[<span class="string">'exons'</span>][idx]):<span class="comment">#check for exons of corresponding transcript  </span></div><div class="line">                exon_len += <span class="string">'%d,'</span> % (ex_cod[<span class="number">1</span>]-ex_cod[<span class="number">0</span>]+<span class="number">1</span>)</div><div class="line">                <span class="keyword">if</span> idz == <span class="number">0</span>: <span class="comment">#calculate the relative start position </span></div><div class="line">                    exon_cod += <span class="string">'0,'</span></div><div class="line">                    rel_start = int(ex_cod[<span class="number">0</span>])<span class="number">-1</span> </div><div class="line">                    rel_stop = int(ex_cod[<span class="number">1</span>])</div><div class="line">                <span class="keyword">else</span>:</div><div class="line">                    exon_cod += <span class="string">'%d,'</span> % (ex_cod[<span class="number">0</span>]<span class="number">-1</span>-rel_start) <span class="comment">## shifting the coordinates to zero </span></div><div class="line">                    rel_stop = int(ex_cod[<span class="number">1</span>])</div></pre></td></tr></table></figure></p>
+<p>替换为<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">writeBED</span><span class="params">(tinfo)</span>:</span></div><div class="line">    <span class="string">"""</span></div><div class="line"><span class="string">    writing result files in bed format </span></div><div class="line"><span class="string"></span></div><div class="line"><span class="string">    @args tinfo: list of genes </span></div><div class="line"><span class="string">    @type tinfo: numpy object  </span></div><div class="line"><span class="string">    """</span></div><div class="line"></div><div class="line">    <span class="keyword">for</span> ent1 <span class="keyword">in</span> tinfo:</div><div class="line">        child_flag = <span class="keyword">False</span>  </div><div class="line"></div><div class="line">        <span class="keyword">for</span> idx, tid <span class="keyword">in</span> enumerate(ent1[<span class="string">'transcripts'</span>]):</div><div class="line">            child_flag = <span class="keyword">True</span> </div><div class="line">            exon_cnt = <span class="number">0</span></div><div class="line">            exon_len = <span class="string">''</span></div><div class="line">            exon_cod = <span class="string">''</span> </div><div class="line">            rel_start = <span class="keyword">None</span> </div><div class="line">            rel_stop = <span class="keyword">None</span> </div><div class="line">            <span class="keyword">if</span> ent1[<span class="string">'exons'</span>][idx].ndim &gt; <span class="number">0</span>:</div><div class="line">                exon_cnt = len(ent1[<span class="string">'exons'</span>][idx])</div><div class="line">                <span class="keyword">for</span> idz, ex_cod <span class="keyword">in</span> enumerate(ent1[<span class="string">'exons'</span>][idx]):<span class="comment">#check for exons of corresponding transcript  </span></div><div class="line">                    exon_len += <span class="string">'%d,'</span> % (ex_cod[<span class="number">1</span>]-ex_cod[<span class="number">0</span>]+<span class="number">1</span>)</div><div class="line">                    <span class="keyword">if</span> idz == <span class="number">0</span>: <span class="comment">#calculate the relative start position </span></div><div class="line">                        exon_cod += <span class="string">'0,'</span></div><div class="line">                        rel_start = int(ex_cod[<span class="number">0</span>])<span class="number">-1</span> </div><div class="line">                        rel_stop = int(ex_cod[<span class="number">1</span>])</div><div class="line">                    <span class="keyword">else</span>:</div><div class="line">                        exon_cod += <span class="string">'%d,'</span> % (ex_cod[<span class="number">0</span>]<span class="number">-1</span>-rel_start) <span class="comment">## shifting the coordinates to zero </span></div><div class="line">                        rel_stop = int(ex_cod[<span class="number">1</span>])</div></pre></td></tr></table></figure></p>
+<p>修改后运行脚本，出现以下错误:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"></div></pre></td></tr></table></figure></p>
+<p>将脚本末尾以下部分代码:<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">out_print = [ent1[<span class="string">'chr'</span>],</div><div class="line">        <span class="string">'%d'</span> % int(ent1[<span class="string">'start'</span>])<span class="number">-1</span>, </div><div class="line">        <span class="string">'%d'</span> % int(ent1[<span class="string">'stop'</span>]),</div></pre></td></tr></table></figure></p>
+<p>修改为:<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">out_print = [ent1[<span class="string">'chr'</span>],</div><div class="line">        <span class="string">'%d'</span> % (int(ent1[<span class="string">'start'</span>])<span class="number">-1</span>), </div><div class="line">        <span class="string">'%d'</span> % int(ent1[<span class="string">'stop'</span>]),</div></pre></td></tr></table></figure></p>
+<p>即可解决问题。</p>
+<hr>
+<p>##BEDOPS<br>BEDOPS包含了多种工具，最常用的就是<code>convert2bed</code>，可将方便的将gff、gtf、bam等多种格式转换为bed或者starch格式，但在转换为12列bed文件时需要借助<code>UCSC</code>提供的软件包来完成。<br>下载需要的UCSC包:<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#可浏览网址http://hgdownload.cse.ucsc.edu/admin/exe/linux.x86_64/ 查看各种包</span></div><div class="line">wget -c http://hgdownload.cse.ucsc.edu/admin/exe/linux.x86_64/gff3ToGenePred</div><div class="line">wget -c http://hgdownload.cse.ucsc.edu/admin/exe/linux.x86_64/gtfToGenePred</div><div class="line">wget -c http://hgdownload.cse.ucsc.edu/admin/exe/linux.x86_64/genePredToBed</div><div class="line">chmod 755 gff3ToGenePred gtfToGenePred genePredToBed</div></pre></td></tr></table></figure></p>
+<p>转换gtf文件为bed12:<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">gtfToGenePred test.gtf test.genePhred &amp;&amp; genePredToBed test.genePhred result.bed &amp;&amp; rm test.genePhred</div></pre></td></tr></table></figure></p>
+<p>转换gff文件为bed12:<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">gtf3ToGenePred test.gff test.genePhred &amp;&amp; genePredToBed test.genePhred result.bed &amp;&amp; rm test.genePhred</div></pre></td></tr></table></figure></p>
+<hr>
+<p>如有问题，欢迎交流。</p>
+
+      
+    </div>
+    
+    
+    
+      <div>
+        
+        <div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------------本文结束<i class="fa fa-paw"></i>感谢您的阅读-------------</div>
+    
+</div>
+
+        
+      </div>
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/gfftools/" rel="tag"><i class="fa fa-tag"></i> gfftools</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/methDiffRegion/" rel="prev" title="methDiffRegion">
+                methDiffRegion <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="uyan_frame"></div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+
+      <section class="site-overview sidebar-panel sidebar-panel-active">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.gif"
+               alt="Guo Junqiang" />
+          <p class="site-author-name" itemprop="name">Guo Junqiang</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/">
+                <span class="site-state-item-count">3</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">2</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">3</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Guo Junqiang</span>
+</div>
+
+
+<!--<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>-->
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+
+  
+</div>
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+  
+  <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.2"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+    
+
+    
+      <!-- UY BEGIN -->
+      <script type="text/javascript" src="http://v2.uyan.cc/code/uyan.js?uid=2142429"></script>
+      <!-- UY END -->
+    
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+
+  
+  
+
+
+  
+
+  
+
+</body>
+</html>
