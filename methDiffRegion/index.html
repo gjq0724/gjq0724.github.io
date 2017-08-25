@@ -85,7 +85,7 @@
 <link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="bismark," />
+  <meta name="keywords" content="bismark,methylKit,R," />
 
 
 
@@ -101,18 +101,18 @@
 
 
 
-<meta name="description" content="#bismark处理测序数据:  对拟南芥基因组建索引 12bismark_genome_preparation   --verbose     --bowtie2  /mnt/S30/guojq/methylation/genome   /*将tair10.fa放到/mnt/S30/guojq/methylation/genome文件夹，bismark会在这个目录下建立索引，之后使用该路径调用索">
-<meta name="keywords" content="bismark">
+<meta name="description" content="bismark处理测序数据: 对拟南芥基因组建索引 12bismark_genome_preparation   --verbose     --bowtie2  /mnt/S30/guojq/methylation/genome   /*将tair10.fa放到/mnt/S30/guojq/methylation/genome文件夹，bismark会在这个目录下建立索引，之后使用该路径调用索引文">
+<meta name="keywords" content="bismark,methylKit,R">
 <meta property="og:type" content="article">
 <meta property="og:title" content="methDiffRegion">
 <meta property="og:url" content="http://gjq0724.github.io/methDiffRegion/index.html">
 <meta property="og:site_name" content="The Future is in Our Hands">
-<meta property="og:description" content="#bismark处理测序数据:  对拟南芥基因组建索引 12bismark_genome_preparation   --verbose     --bowtie2  /mnt/S30/guojq/methylation/genome   /*将tair10.fa放到/mnt/S30/guojq/methylation/genome文件夹，bismark会在这个目录下建立索引，之后使用该路径调用索">
+<meta property="og:description" content="bismark处理测序数据: 对拟南芥基因组建索引 12bismark_genome_preparation   --verbose     --bowtie2  /mnt/S30/guojq/methylation/genome   /*将tair10.fa放到/mnt/S30/guojq/methylation/genome文件夹，bismark会在这个目录下建立索引，之后使用该路径调用索引文">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2017-08-25T09:32:03.591Z">
+<meta property="og:updated_time" content="2017-08-25T09:59:48.536Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="methDiffRegion">
-<meta name="twitter:description" content="#bismark处理测序数据:  对拟南芥基因组建索引 12bismark_genome_preparation   --verbose     --bowtie2  /mnt/S30/guojq/methylation/genome   /*将tair10.fa放到/mnt/S30/guojq/methylation/genome文件夹，bismark会在这个目录下建立索引，之后使用该路径调用索">
+<meta name="twitter:description" content="bismark处理测序数据: 对拟南芥基因组建索引 12bismark_genome_preparation   --verbose     --bowtie2  /mnt/S30/guojq/methylation/genome   /*将tair10.fa放到/mnt/S30/guojq/methylation/genome文件夹，bismark会在这个目录下建立索引，之后使用该路径调用索引文">
 
 
 
@@ -392,8 +392,7 @@
       
 
       
-        <p>#bismark处理测序数据:</p>
-<ol>
+        <h1 id="bismark处理测序数据"><a href="#bismark处理测序数据" class="headerlink" title="bismark处理测序数据:"></a>bismark处理测序数据:</h1><ol>
 <li><p>对拟南芥基因组建索引</p>
 <figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">bismark_genome_preparation   --verbose     --bowtie2  /mnt/S30/guojq/methylation/genome   </div><div class="line">/*将tair10.fa放到/mnt/S30/guojq/methylation/genome文件夹，bismark会在这个目录下建立索引，之后使用该路径调用索引文件*/</div></pre></td></tr></table></figure>
 </li>
@@ -401,8 +400,7 @@
 <figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">bismark -p 5  /mnt/S30/guojq/methylation/genome --bowtie2  -1 /mnt/S30/guojq/methylation/data/CIBC-CK1/CIBC-CK1_1.fq -2 /mnt/S30/guojq/methylation/data/CIBC-CK1/CIBC-CK1_2.fq  -o ./CIBC-CK1 &amp;</div><div class="line">bismark -p 5  /mnt/S30/guojq/methylation/genome --bowtie2  -1 /mnt/S30/guojq/methylation/data/CIBC-CK2/CIBC-CK2_1.fq -2 /mnt/S30/guojq/methylation/data/CIBC-CK2/CIBC-CK2_2.fq  -o ./CIBC-CK2 &amp;</div><div class="line">bismark -p 5  /mnt/S30/guojq/methylation/genome --bowtie2  -1 /mnt/S30/guojq/methylation/data/CIBC-DT1/CIBC-DT1_1.fq -2 /mnt/S30/guojq/methylation/data/CIBC-DT1/CIBC-DT1_2.fq  -o ./CIBC-DT1 &amp;</div><div class="line">bismark -p 5  /mnt/S30/guojq/methylation/genome --bowtie2  -1 /mnt/S30/guojq/methylation/data/CIBC-DT2/CIBC-DT2_1.fq -2 /mnt/S30/guojq/methylation/data/CIBC-DT2/CIBC-DT2_2.fq  -o ./CIBC-DT2 &amp;</div><div class="line">bismark -p 5  /mnt/S30/guojq/methylation/genome --bowtie2  -1 /mnt/S30/guojq/methylation/data/BURO-CK1/BURO-CK1_1.fq -2 /mnt/S30/guojq/methylation/data/BURO-CK1/BURO-CK1_2.fq  -o ./BURO-CK1 &amp;</div><div class="line">bismark -p 5  /mnt/S30/guojq/methylation/genome --bowtie2  -1 /mnt/S30/guojq/methylation/data/BURO-CK2/BURO-CK2_1.fq -2 /mnt/S30/guojq/methylation/data/BURO-CK2/BURO-CK2_2.fq  -o ./BURO-CK2 &amp;</div><div class="line">bismark -p 5  /mnt/S30/guojq/methylation/genome --bowtie2  -1 /mnt/S30/guojq/methylation/data/BURO-DT1/BURO-DT1_1.fq -2 /mnt/S30/guojq/methylation/data/BURO-DT1/BURO-DT1_2.fq  -o ./BURO-DT1 &amp;</div><div class="line">bismark -p 5  /mnt/S30/guojq/methylation/genome --bowtie2  -1 /mnt/S30/guojq/methylation/data/BURO-DT2/BURO-DT2_1.fq -2 /mnt/S30/guojq/methylation/data/BURO-DT2/BURO-DT2_2.fq  -o ./BURO-DT2</div></pre></td></tr></table></figure>
 </li>
 </ol>
-<p>#methylKit分析甲基化差异性表达</p>
-<ol>
+<h1 id="methylKit分析甲基化差异性表达"><a href="#methylKit分析甲基化差异性表达" class="headerlink" title="methylKit分析甲基化差异性表达"></a>methylKit分析甲基化差异性表达</h1><ol>
 <li><p>对<code>bismark</code>生成的bam文件排序，转化为sam文件，命令:</p>
 <figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">foreach BAM(*_pe.bam)</div><div class="line">samtools sort <span class="variable">$BAM</span> `\basename <span class="variable">$BAM</span> .bam`.sorted</div><div class="line">samtools view -h `\basename <span class="variable">$BAM</span> .bam`.sorted.bam &gt; `\basename <span class="variable">$BAM</span> .bam`.sorted.sam</div><div class="line">end</div></pre></td></tr></table></figure>
 </li>
@@ -476,6 +474,10 @@
         <div class="post-tags">
           
             <a href="/tags/bismark/" rel="tag"><i class="fa fa-tag"></i> bismark</a>
+          
+            <a href="/tags/methylKit/" rel="tag"><i class="fa fa-tag"></i> methylKit</a>
+          
+            <a href="/tags/R/" rel="tag"><i class="fa fa-tag"></i> R</a>
           
         </div>
       
@@ -554,8 +556,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview sidebar-panel sidebar-panel-active">
+      <section class="site-overview sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
                src="/images/avatar.gif"
@@ -592,7 +603,7 @@
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">3</span>
+                <span class="site-state-item-count">6</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
@@ -603,6 +614,30 @@
         
 
         <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/gjq0724/" target="_blank" title="github">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                    
+                      github
+                    
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/gjq0724" target="_blank" title="weibo">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                    
+                      weibo
+                    
+                </a>
+              </span>
+            
           
         </div>
 
@@ -617,6 +652,22 @@
 
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#bismark处理测序数据"><span class="nav-number">1.</span> <span class="nav-text">bismark处理测序数据:</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#methylKit分析甲基化差异性表达"><span class="nav-number">2.</span> <span class="nav-text">methylKit分析甲基化差异性表达</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       

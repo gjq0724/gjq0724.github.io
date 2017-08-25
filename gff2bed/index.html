@@ -101,18 +101,18 @@
 
 
 
-<meta name="description" content="BED 文件格式提供了一种灵活的方式来定义的数据行，以用来描述注释的信息。BED行有3个必须的列和9个额外可选的列。 每行的数据格式要求一致。通常所见的bed文件为6列，但是一些软件要求输入12列bed文件(UCSC  Genome Browser)，通过探索研究出一下两种从gff3/gtf转为12列bed文件的方法。 ##GFFtools-GX GFFtools-GX是vipints分享在Git">
+<meta name="description" content="BED 文件格式提供了一种灵活的方式来定义的数据行，以用来描述注释的信息。BED行有3个必须的列和9个额外可选的列。 每行的数据格式要求一致。通常所见的bed文件为6列，但是一些软件要求输入12列bed文件(UCSC  Genome Browser)，通过探索研究出一下两种从gff3/gtf转为12列bed文件的方法。 GFFtools-GXGFFtools-GX是vipints分享在GitHub">
 <meta name="keywords" content="gfftools">
 <meta property="og:type" content="article">
 <meta property="og:title" content="gff2bed">
 <meta property="og:url" content="http://gjq0724.github.io/gff2bed/index.html">
 <meta property="og:site_name" content="The Future is in Our Hands">
-<meta property="og:description" content="BED 文件格式提供了一种灵活的方式来定义的数据行，以用来描述注释的信息。BED行有3个必须的列和9个额外可选的列。 每行的数据格式要求一致。通常所见的bed文件为6列，但是一些软件要求输入12列bed文件(UCSC  Genome Browser)，通过探索研究出一下两种从gff3/gtf转为12列bed文件的方法。 ##GFFtools-GX GFFtools-GX是vipints分享在Git">
+<meta property="og:description" content="BED 文件格式提供了一种灵活的方式来定义的数据行，以用来描述注释的信息。BED行有3个必须的列和9个额外可选的列。 每行的数据格式要求一致。通常所见的bed文件为6列，但是一些软件要求输入12列bed文件(UCSC  Genome Browser)，通过探索研究出一下两种从gff3/gtf转为12列bed文件的方法。 GFFtools-GXGFFtools-GX是vipints分享在GitHub">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2017-08-25T06:03:35.202Z">
+<meta property="og:updated_time" content="2017-08-25T10:00:33.103Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="gff2bed">
-<meta name="twitter:description" content="BED 文件格式提供了一种灵活的方式来定义的数据行，以用来描述注释的信息。BED行有3个必须的列和9个额外可选的列。 每行的数据格式要求一致。通常所见的bed文件为6列，但是一些软件要求输入12列bed文件(UCSC  Genome Browser)，通过探索研究出一下两种从gff3/gtf转为12列bed文件的方法。 ##GFFtools-GX GFFtools-GX是vipints分享在Git">
+<meta name="twitter:description" content="BED 文件格式提供了一种灵活的方式来定义的数据行，以用来描述注释的信息。BED行有3个必须的列和9个额外可选的列。 每行的数据格式要求一致。通常所见的bed文件为6列，但是一些软件要求输入12列bed文件(UCSC  Genome Browser)，通过探索研究出一下两种从gff3/gtf转为12列bed文件的方法。 GFFtools-GXGFFtools-GX是vipints分享在GitHub">
 
 
 
@@ -393,8 +393,7 @@
 
       
         <p><em>BED 文件格式提供了一种灵活的方式来定义的数据行，以用来描述注释的信息。BED行有3个必须的列和9个额外可选的列。 每行的数据格式要求一致。通常所见的bed文件为6列，但是一些软件要求输入12列bed文件(UCSC  Genome Browser)，通过探索研究出一下两种从gff3/gtf转为12列bed文件的方法。</em></p>
-<p>##GFFtools-GX</p>
-<p><code>GFFtools-GX</code>是<code>vipints</code>分享在<a href="https://github.com/vipints/GFFtools-GX.git" target="_blank" rel="external">GitHub</a>上的一个程序集，里面包含了gff、gtf、gbk、bed格式之间的相互转换。</p>
+<h1 id="GFFtools-GX"><a href="#GFFtools-GX" class="headerlink" title="GFFtools-GX"></a>GFFtools-GX</h1><p><code>GFFtools-GX</code>是<code>vipints</code>分享在<a href="https://github.com/vipints/GFFtools-GX.git" target="_blank" rel="external">GitHub</a>上的一个程序集，里面包含了gff、gtf、gbk、bed格式之间的相互转换。</p>
 <ul>
 <li><p>在<code>GitHub</code>上，<code>vipints</code>分享了一种使用方式，该方式需要在本地先配置<code>Galaxy Tool shed</code>(具体配置看<a href="https://toolshed.g2.bx.psu.edu/" target="_blank" rel="external">网站说明</a>，并安装了python2.6或者2.7以及biopython。配置完成后，使用一下命令调用该软件包:</p>
 <figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sh run_functional_tests.sh -id fml_gtf2gff</div></pre></td></tr></table></figure>
@@ -410,8 +409,7 @@
 <p>将脚本末尾以下部分代码:<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">out_print = [ent1[<span class="string">'chr'</span>],</div><div class="line">        <span class="string">'%d'</span> % int(ent1[<span class="string">'start'</span>])<span class="number">-1</span>, </div><div class="line">        <span class="string">'%d'</span> % int(ent1[<span class="string">'stop'</span>]),</div></pre></td></tr></table></figure></p>
 <p>修改为:<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">out_print = [ent1[<span class="string">'chr'</span>],</div><div class="line">        <span class="string">'%d'</span> % (int(ent1[<span class="string">'start'</span>])<span class="number">-1</span>), </div><div class="line">        <span class="string">'%d'</span> % int(ent1[<span class="string">'stop'</span>]),</div></pre></td></tr></table></figure></p>
 <p>即可解决问题。</p>
-<hr>
-<p>##BEDOPS<br>BEDOPS包含了多种工具，最常用的就是<code>convert2bed</code>，可将方便的将gff、gtf、bam等多种格式转换为bed或者starch格式，但在转换为12列bed文件时需要借助<code>UCSC</code>提供的软件包来完成。<br>下载需要的UCSC包:<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#可浏览网址http://hgdownload.cse.ucsc.edu/admin/exe/linux.x86_64/ 查看各种包</span></div><div class="line">wget -c http://hgdownload.cse.ucsc.edu/admin/exe/linux.x86_64/gff3ToGenePred</div><div class="line">wget -c http://hgdownload.cse.ucsc.edu/admin/exe/linux.x86_64/gtfToGenePred</div><div class="line">wget -c http://hgdownload.cse.ucsc.edu/admin/exe/linux.x86_64/genePredToBed</div><div class="line">chmod 755 gff3ToGenePred gtfToGenePred genePredToBed</div></pre></td></tr></table></figure></p>
+<h1 id="BEDOPS"><a href="#BEDOPS" class="headerlink" title="BEDOPS"></a>BEDOPS</h1><p>BEDOPS包含了多种工具，最常用的就是<code>convert2bed</code>，可将方便的将gff、gtf、bam等多种格式转换为bed或者starch格式，但在转换为12列bed文件时需要借助<code>UCSC</code>提供的软件包来完成。<br>下载需要的UCSC包:<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#可浏览网址http://hgdownload.cse.ucsc.edu/admin/exe/linux.x86_64/ 查看各种包</span></div><div class="line">wget -c http://hgdownload.cse.ucsc.edu/admin/exe/linux.x86_64/gff3ToGenePred</div><div class="line">wget -c http://hgdownload.cse.ucsc.edu/admin/exe/linux.x86_64/gtfToGenePred</div><div class="line">wget -c http://hgdownload.cse.ucsc.edu/admin/exe/linux.x86_64/genePredToBed</div><div class="line">chmod 755 gff3ToGenePred gtfToGenePred genePredToBed</div></pre></td></tr></table></figure></p>
 <p>转换gtf文件为bed12:<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">gtfToGenePred test.gtf test.genePhred &amp;&amp; genePredToBed test.genePhred result.bed &amp;&amp; rm test.genePhred</div></pre></td></tr></table></figure></p>
 <p>转换gff文件为bed12:<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">gtf3ToGenePred test.gff test.genePhred &amp;&amp; genePredToBed test.genePhred result.bed &amp;&amp; rm test.genePhred</div></pre></td></tr></table></figure></p>
 <hr>
@@ -518,8 +516,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview sidebar-panel sidebar-panel-active">
+      <section class="site-overview sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
                src="/images/avatar.gif"
@@ -556,7 +563,7 @@
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">3</span>
+                <span class="site-state-item-count">6</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
@@ -567,6 +574,30 @@
         
 
         <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/gjq0724/" target="_blank" title="github">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                    
+                      github
+                    
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/gjq0724" target="_blank" title="weibo">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                    
+                      weibo
+                    
+                </a>
+              </span>
+            
           
         </div>
 
@@ -581,6 +612,22 @@
 
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#GFFtools-GX"><span class="nav-number">1.</span> <span class="nav-text">GFFtools-GX</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#BEDOPS"><span class="nav-number">2.</span> <span class="nav-text">BEDOPS</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
