@@ -109,7 +109,7 @@
 <meta property="og:site_name" content="The Future is in Our Hands">
 <meta property="og:description" content="#bismark处理测序数据:  对拟南芥基因组建索引 12bismark_genome_preparation   --verbose     --bowtie2  /mnt/S30/guojq/methylation/genome   /*将tair10.fa放到/mnt/S30/guojq/methylation/genome文件夹，bismark会在这个目录下建立索引，之后使用该路径调用索">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2017-08-25T06:14:40.105Z">
+<meta property="og:updated_time" content="2017-08-25T09:32:03.591Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="methDiffRegion">
 <meta name="twitter:description" content="#bismark处理测序数据:  对拟南芥基因组建索引 12bismark_genome_preparation   --verbose     --bowtie2  /mnt/S30/guojq/methylation/genome   /*将tair10.fa放到/mnt/S30/guojq/methylation/genome文件夹，bismark会在这个目录下建立索引，之后使用该路径调用索">
@@ -410,7 +410,37 @@
 <figure class="highlight r"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">library</span>(methylKit)</div><div class="line"></div><div class="line">fns=Sys.glob(<span class="string">'*.sam'</span>)</div><div class="line"><span class="keyword">for</span>(fn <span class="keyword">in</span> fns)&#123;</div><div class="line">			wri_f=paste(   strsplit( fn, <span class="string">'_1_bismark_bt2_pe.sorted.sam'</span>, fixed=<span class="literal">T</span> )[[<span class="number">1</span>]][<span class="number">1</span>] ,<span class="string">''</span>, sep=<span class="string">''</span>)</div><div class="line">			myobj=read.bismark(fn,wri_f,assembly=<span class="string">"tair10"</span>,save.context=<span class="string">"CpG"</span>,read.context=<span class="string">"CpG"</span>,save.fold=getwd())</div><div class="line">		&#125;</div></pre></td></tr></table></figure>
 </li>
 </ol>
-<p><code>read.bismark</code>是<code>methylKit</code>自带的一个方法，可以提取CpG、CHG、CHH甲基化水平，生成包含甲基化水平的txt文件，格式如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">chrBase|chr|base|strand|coverage|freqC|freqT</div><div class="line">Chr1.500|Chr1|500|F|20|0.00|100.00</div><div class="line">Chr1.511|Chr1|511|F|22|0.00|100.00</div></pre></td></tr></table></figure></p>
+<p><code>read.bismark</code>是<code>methylKit</code>自带的一个方法，可以提取CpG、CHG、CHH甲基化水平，生成包含甲基化水平的txt文件，格式如下：</p>
+<table>
+<thead>
+<tr>
+<th>chrBase</th>
+<th style="text-align:center">chr</th>
+<th style="text-align:center">base</th>
+<th>strand</th>
+<th>coverage</th>
+<th>freqC</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Chr1.500</td>
+<td style="text-align:center">Chr1</td>
+<td style="text-align:center">500</td>
+<td>F</td>
+<td>20</td>
+<td>0.00</td>
+</tr>
+<tr>
+<td>Chr1.511</td>
+<td style="text-align:center">Chr1</td>
+<td style="text-align:center">511</td>
+<td>F</td>
+<td>22</td>
+<td>0.00</td>
+</tr>
+</tbody>
+</table>
 <ol>
 <li><p>根据甲基化水平文件，生成<code>bedGraph</code>文件</p>
 <figure class="highlight r"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">library</span>(methylKit)</div><div class="line">fns=Sys.glob(<span class="string">'*.txt'</span>)</div><div class="line">		<span class="keyword">for</span>(fn <span class="keyword">in</span> fns)&#123;</div><div class="line">			wri_f=paste(   strsplit( fn, <span class="string">'_CpG.txt'</span>, fixed=<span class="literal">T</span> )[[<span class="number">1</span>]][<span class="number">1</span>] , <span class="string">''</span>, sep=<span class="string">''</span>)</div><div class="line">			myobj=methRead(fn,wri_f,<span class="string">"tair10"</span>)</div><div class="line">			wri_f=paste(   strsplit( fn, <span class="string">'.txt'</span>, fixed=<span class="literal">T</span> )[[<span class="number">1</span>]][<span class="number">1</span>] , <span class="string">'.bedgraph'</span>, sep=<span class="string">''</span>)</div><div class="line">			bedgraph(myobj,wri_f,col.name=<span class="string">"perc.meth"</span>,unmeth=<span class="literal">FALSE</span>,log.transform=<span class="literal">FALSE</span>,negative=<span class="literal">FALSE</span>,add.on=<span class="string">""</span>)</div><div class="line"></div><div class="line">		&#125;</div></pre></td></tr></table></figure>
@@ -551,7 +581,7 @@
             
             <div class="site-state-item site-state-categories">
               <a href="/categories/index.html">
-                <span class="site-state-item-count">2</span>
+                <span class="site-state-item-count">1</span>
                 <span class="site-state-item-name">分类</span>
               </a>
             </div>
