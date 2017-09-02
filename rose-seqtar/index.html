@@ -1,0 +1,829 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+  
+  
+    
+    
+  <script src="/lib/pace/pace.min.js?v=1.0.2"></script>
+  <link href="/lib/pace/pace-theme-minimal.min.css?v=1.0.2" rel="stylesheet">
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="seqtar,rose,script," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.2" />
+
+
+
+
+
+
+<meta name="description" content="运行seqtar程序seqtar的运行需要三个文件，分别是cDNA文件，保守miRNA做的序列文件（fa格式），以及降解组数据通过small-rna分析生成的tissue-freq文件，具体脚本如下： 123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354">
+<meta name="keywords" content="seqtar,rose,script">
+<meta property="og:type" content="article">
+<meta property="og:title" content="rose-seqtar">
+<meta property="og:url" content="http://gjq0724.github.io/rose-seqtar/index.html">
+<meta property="og:site_name" content="The Future is in Our Hands">
+<meta property="og:description" content="运行seqtar程序seqtar的运行需要三个文件，分别是cDNA文件，保守miRNA做的序列文件（fa格式），以及降解组数据通过small-rna分析生成的tissue-freq文件，具体脚本如下： 123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2017-09-02T17:10:06.987Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="rose-seqtar">
+<meta name="twitter:description" content="运行seqtar程序seqtar的运行需要三个文件，分别是cDNA文件，保守miRNA做的序列文件（fa格式），以及降解组数据通过small-rna分析生成的tissue-freq文件，具体脚本如下： 123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: true,
+    duoshuo: {
+      userId: 'undefined',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://gjq0724.github.io/rose-seqtar/"/>
+
+
+
+
+
+  <title>rose-seqtar | The Future is in Our Hands</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+    <a href="https://github.com/gjq0724/"><img style="position: absolute; top: 0; left: 0; border: 0;" src="https://camo.githubusercontent.com/567c3a48d796e2fc06ea80409cc9dd82bf714434/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f6c6566745f6461726b626c75655f3132313632312e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_left_darkblue_121621.png"></a>
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">The Future is in Our Hands</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://gjq0724.github.io/rose-seqtar/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Guo Junqiang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="The Future is in Our Hands">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">rose-seqtar</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-09-03T00:56:48+08:00">
+                2017-09-03
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/项目随笔/" itemprop="url" rel="index">
+                    <span itemprop="name">项目随笔</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+            
+            <span id="/rose-seqtar/" class="leancloud_visitors" data-flag-title="rose-seqtar">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+
+            <span class="page-pv">
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+            </span>
+         </span>
+          
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="运行seqtar程序"><a href="#运行seqtar程序" class="headerlink" title="运行seqtar程序"></a>运行seqtar程序</h2><p>seqtar的运行需要三个文件，分别是cDNA文件，保守miRNA做的序列文件（fa格式），以及降解组数据通过small-rna分析生成的tissue-freq文件，具体脚本如下：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div><div class="line">110</div><div class="line">111</div><div class="line">112</div><div class="line">113</div><div class="line">114</div><div class="line">115</div><div class="line">116</div><div class="line">117</div><div class="line">118</div><div class="line">119</div><div class="line">120</div><div class="line">121</div><div class="line">122</div><div class="line">123</div><div class="line">124</div><div class="line">125</div><div class="line">126</div><div class="line">127</div><div class="line">128</div><div class="line">129</div><div class="line">130</div><div class="line">131</div><div class="line">132</div><div class="line">133</div><div class="line">134</div><div class="line">135</div><div class="line">136</div><div class="line">137</div><div class="line">138</div><div class="line">139</div><div class="line">140</div><div class="line">141</div><div class="line">142</div><div class="line">143</div><div class="line">144</div><div class="line">145</div><div class="line">146</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#################################################################################</span></div><div class="line"><span class="comment"># The SeqTar pipeline - predict miRNA/siRNA targets from degradomes</span></div><div class="line"><span class="comment">#</span></div><div class="line"><span class="comment"># 2010 - 2011</span></div><div class="line"><span class="comment">#</span></div><div class="line"><span class="comment"># last update: May 30, 2011</span></div><div class="line"><span class="comment"># </span></div><div class="line"><span class="comment"># All rights reserved by Yun ZHENG (zhengyun@fudan.edu.cn)</span></div><div class="line"><span class="comment">#</span></div><div class="line"><span class="comment"># Please read the license.txt before you use the SeqTar pipeline. </span></div><div class="line"><span class="comment"># Contact Dr. Yun Zheng to obtain a license if you do not have one.</span></div><div class="line"><span class="comment">#</span></div><div class="line"><span class="comment"># Yun Zheng</span></div><div class="line"><span class="comment"># Institute of Developmental Biology and Molecular Medicine</span></div><div class="line"><span class="comment"># Fudan University</span></div><div class="line"><span class="comment"># Yifu Bldg of Science and Tech., 220 Handan Road</span></div><div class="line"><span class="comment"># Shanghai, China 200433</span></div><div class="line"><span class="comment"># zhengyun@fudan.edu.cn</span></div><div class="line"><span class="comment"># </span></div><div class="line"><span class="comment"># This software has NO WARRANTY. The author and Fudan University have NO</span></div><div class="line"><span class="comment"># responsibility on the consequences of using the software.</span></div><div class="line"><span class="comment">#</span></div><div class="line"><span class="comment">#################################################################################</span></div><div class="line"></div><div class="line"><span class="comment">#################################################################################</span></div><div class="line"><span class="comment"># 2. Required programs:</span></div><div class="line"><span class="comment"># 2.1. Before your run SeqTar, you should make sure the following packages have been</span></div><div class="line"><span class="comment">#    installed in your system.</span></div><div class="line"><span class="comment"># 2.1.1 Java version 1.6.0 or newer version</span></div><div class="line"><span class="comment">#    Read http://www.java.com/en/download/help/linux_install.xml for Java and </span></div><div class="line"><span class="comment">#    a manual of installation.</span></div><div class="line"><span class="comment"># 2.1.2 NCBI SOAP2 or BLAST (see the script for BLAST users)</span></div><div class="line"><span class="comment">#    To obtain BLAST, visit ftp://ftp.ncbi.nlm.nih.gov/blast/executables/release/LATEST/</span></div><div class="line"><span class="comment">#    To obtain SOAP2, visit http://soap.genomics.org.cn/soapaligner.html</span></div><div class="line"><span class="comment"># 2.1.3 The tcsh shell.</span></div><div class="line"><span class="comment">#################################################################################</span></div><div class="line"></div><div class="line"><span class="comment">#################################################################################</span></div><div class="line"><span class="comment"># 3. Input files:</span></div><div class="line"><span class="comment">#    In this script, suppose your degradome file is named as degradome.fa, </span></div><div class="line"><span class="comment">#    the cDNA sequence file is named as all.cDNA, and</span></div><div class="line"><span class="comment">#    the miRNA/siRNA sequence file is name as miRNA.fa.</span></div><div class="line"><span class="comment"># 3.1 Format of degradome.fa</span></div><div class="line"><span class="comment">#    The degradome unique reads file should follow a special fasta format such that</span></div><div class="line"><span class="comment">#    the frequency of unique sequence is placed after the ID of the read, separated </span></div><div class="line"><span class="comment">#    with a space. An example is</span></div><div class="line"><span class="comment">#    &gt;r0001 20</span></div><div class="line"><span class="comment">#    ACCATTCGGAGTCGAAGCGT</span></div><div class="line"><span class="comment">#    &gt;r0002 12</span></div><div class="line"><span class="comment">#    TCCACGCGGATGGTCGGCGT</span></div><div class="line"><span class="comment">#    where the read r0001, ACCATTCGGAGTCGAAGCGT, has appeared 20 times in the degradome</span></div><div class="line"><span class="comment">#    data set, and so on.</span></div><div class="line"><span class="comment"># 3.2 The format of all.cDNA</span></div><div class="line"><span class="comment">#    There are no requirements for the format of cDNA sequences. But the IDs of</span></div><div class="line"><span class="comment">#    cDNA sequences should be unique, where .1, .2 etc will be used to indicate</span></div><div class="line"><span class="comment">#    the splicing variants from the same locus.</span></div><div class="line"><span class="comment">#    It is better to have the annotation of the cDNA after its ID. These annotation</span></div><div class="line"><span class="comment">#    information will be given in the output files if there are provide in the cDNA</span></div><div class="line"><span class="comment">#    sequence files.</span></div><div class="line"><span class="comment"># 3.3 The miRNA sequence file</span></div><div class="line"><span class="comment">#    Although not required, it is highly suggested to combined miRNA/siRNAs that</span></div><div class="line"><span class="comment">#    have the same mature miRNA/siRNA sequences into one entry in the fle of miRNA</span></div><div class="line"><span class="comment">#    sequences.</span></div><div class="line"><span class="comment"># 3.4 How to use this script</span></div><div class="line"><span class="comment">#    under Linux OS, bash shell, type this line below and return.</span></div><div class="line"><span class="comment">#    $nohup tcsh seqtar-pipeline-soap.sh &amp; </span></div><div class="line"><span class="comment">#################################################################################</span></div><div class="line"></div><div class="line"><span class="comment">#################################################################################</span></div><div class="line"><span class="comment"># 4. Step 0, split the raw degradome reads, degradome.fa, to separate files with 1M reads.</span></div><div class="line"><span class="comment">#    <span class="doctag">NOTE:</span> You should make sure there are no files with the extension of fasta.</span></div><div class="line"><span class="comment">#    Make sure to place JSmallRNA.jar and your input files mentioned in Section 3 in</span></div><div class="line"><span class="comment">#    the same folder.</span></div><div class="line">java jsmallrna.mirna.SplitFastaFile -i degradome.fa -n 100000 -o separated_deg.fasta</div><div class="line"><span class="comment">#################################################################################</span></div><div class="line"></div><div class="line"><span class="comment">#################################################################################</span></div><div class="line"><span class="comment"># 5. Step 1, align raw degradome reads, separated_deg.fasta, to cDNA sequences, all.cDNA</span></div><div class="line"><span class="comment"># 5.1 This is to build the index file that will be used by SOAP2.</span></div><div class="line"><span class="comment">#2bwt-builder all.cDNA</span></div><div class="line"><span class="comment"># 5.2 This is to align degradome reads to cDNA with SOAP2.</span></div><div class="line">foreach FASTA (*.fasta)</div><div class="line">soap -a <span class="variable">$FASTA</span> -D /mnt/S30/guojq/rose/rose-degradome/rose-leaf-degradome/seqtar/all.cDNA.index -o `\basename <span class="variable">$FASTA</span> .fasta`-vs-cdna.soap -M 0 -r 2 -u `\basename <span class="variable">$FASTA</span> .fasta`-unmapped.fa</div><div class="line">end</div><div class="line"><span class="comment"># where `\basename $FASTA .fasta` will be a file that contains unaligned degradome reads.</span></div><div class="line"><span class="comment">#################################################################################</span></div><div class="line"></div><div class="line"><span class="comment">#################################################################################</span></div><div class="line"><span class="comment"># 6. Step 2, normalize the reads according to their hits in the cDNA sequences</span></div><div class="line">foreach FASTA (*.fasta)</div><div class="line">java jsmallrna.seqtar.NormalizeReadSOAP -i <span class="variable">$FASTA</span> -s `\basename <span class="variable">$FASTA</span> .fasta`-vs-cdna.soap -o `\basename <span class="variable">$FASTA</span> .fasta`.norm</div><div class="line">end</div><div class="line"><span class="comment">#################################################################################</span></div><div class="line"></div><div class="line"><span class="comment">#################################################################################</span></div><div class="line"><span class="comment"># 7. Step 3, concatenate all normalized reads and align the normalized reads to the cDNA sequences</span></div><div class="line">cat *.norm &gt; all_norm.fa</div><div class="line">soap -a all_norm.fa -D /mnt/S30/guojq/rose/rose-degradome/rose-leaf-degradome/seqtar/all.cDNA.index -o all-norm-vs-cdna.soap -M 0 -r 2 -u all-norm-unmapped.fa</div><div class="line"><span class="comment">#################################################################################</span></div><div class="line"></div><div class="line"><span class="comment">#################################################################################</span></div><div class="line"><span class="comment"># 8. Step 4, sort the blast results according to the IDs of cDNAs</span></div><div class="line">sort -k 8 all-norm-vs-cdna.soap &gt; all-norm-vs-cdna-sorted.soap</div><div class="line"><span class="comment">#################################################################################</span></div><div class="line"></div><div class="line"><span class="comment">#################################################################################</span></div><div class="line"><span class="comment"># 9. Step 5, the main SeqTar step</span></div><div class="line"><span class="comment"># 9.1 This step is to split the miRNA file to small segments.</span></div><div class="line"><span class="comment">#java jsmallrna.mirna.SplitFastaFile -i miRNA.fa -n 20 -o uniq-miRNA.separated</span></div><div class="line"><span class="comment"># 9.2 This is the main step of SeqTar</span></div><div class="line">foreach SEP_MIR (*.separated)</div><div class="line">java jsmallrna.seqtar.SeqTarSOAP -t /mnt/S30/guojq/rose/rose-degradome/rose-leaf-degradome/seqtar/all.cDNA -i <span class="variable">$SEP_MIR</span> -b ../all-norm-vs-cdna-sorted.soap -l 20 -p 100 -o `\basename <span class="variable">$SEP_MIR</span> .separated`-cdna.seqtar -s 60 -a 0.1 -m 0.1 &gt; `\basename <span class="variable">$SEP_MIR</span> .separated`-vs-cdna.log</div><div class="line">end</div><div class="line"><span class="comment"># 9.3 The output of this step</span></div><div class="line"><span class="comment"># This step will produce the following files. See Supplementary Methods for more </span></div><div class="line"><span class="comment"># details.</span></div><div class="line"><span class="comment"># 9.3.1 The file miRNA-cdna-mir-cand.txt listed the miRNA/siRNA candidates. </span></div><div class="line"><span class="comment"># 9.3.2 The miRNA-cdna-reads-distr.m contained matlab scripts to generate T-plots </span></div><div class="line"><span class="comment">#     for all targets.</span></div><div class="line"><span class="comment"># 9.3.3 The miRNA-cdna-shuffled-scores.txt file contained the scores of shuffled </span></div><div class="line"><span class="comment">#     sRNA sequences for each of the inputted sRNAs.</span></div><div class="line"><span class="comment"># 9.3.4 The miRNA-cdna-total-reads.txt file contained the total number of reads </span></div><div class="line"><span class="comment">#     that were perfectly matched to each transcript sequences in the file all.cDNA.</span></div><div class="line"><span class="comment"># 9.3.5 The miRNA-cdna-unique.txt file listed the unique sRNA:target pairs.</span></div><div class="line"><span class="comment"># 9.3.6 The miRNA-cdna.seqtar file were the full results, with all sRNA:target </span></div><div class="line"><span class="comment">#     alignments and the number of reads corresponding to each site.</span></div><div class="line"><span class="comment"># 9.3.7 The miRNA-vs-cdna.log is a log of computing process.</span></div><div class="line"><span class="comment">#################################################################################</span></div><div class="line"></div><div class="line"><span class="comment">#################################################################################</span></div><div class="line"><span class="comment"># 10. Step 6, this is an additional step to remove the redundant miRNA:target pairs </span></div><div class="line"><span class="comment">#    in the miRNA-cdna-unique.txt file.</span></div><div class="line"><span class="comment">#cat *unique.txt &gt; miRNA-cdna-unique.original</span></div><div class="line"><span class="comment">#grep "@@" miRNA-cdna-unique.original &gt; miRNA-cdna-pairs.txt</span></div><div class="line"><span class="comment">#sed 's/@@\t//g' miRNA-cdna-pairs.txt &gt; miRNA-cdna-pairs-trimmed.txt</span></div><div class="line"><span class="comment">#sed 's/Query/#Query/g' miRNA-cdna-pairs-trimmed.txt &gt; miRNA-cdna-pairs-trimmed.replaced</span></div><div class="line"><span class="comment"># 10.1 This step is to remove the duplicate miRNA:target pairs that caused by</span></div><div class="line"><span class="comment"># different members of the same miRNA family, and different splicing variants</span></div><div class="line"><span class="comment"># of the same gene.</span></div><div class="line"><span class="comment">#java -cp ./JSmallRNA.jar jsmallrna.mirna.RetrieveMiRTargetFamily -i miRNA-cdna-pairs-trimmed.replaced -o miRNA-cdna-family.txt -u miRNA-cdna.uniq</span></div><div class="line"><span class="comment"># 10.2 This step is to remove the redundant miRNA:target pairs. A miRNA:target pair</span></div><div class="line"><span class="comment"># is definied as a redundant miRNA pair if i) the miRNA binds to the same site</span></div><div class="line"><span class="comment"># or has less than or equal to 2 nt shift from a site of the other miRNA; ii) </span></div><div class="line"><span class="comment"># the complementary site of this miRNA has more mismatches than the other miRNA's.</span></div><div class="line"><span class="comment">#java -cp ./JSmallRNA.jar jsmallrna.mirna.RemoveRedundantMiRTarget -i miRNA-cdna.uniq -o miRNA-cdna-family-total.txt -u miRNA-cdna-no-redundant.txt</span></div><div class="line"><span class="comment">#################################################################################</span></div></pre></td></tr></table></figure>
+<h2 id="整理seqtar结果，画t-plots图"><a href="#整理seqtar结果，画t-plots图" class="headerlink" title="整理seqtar结果，画t-plots图"></a>整理seqtar结果，画t-plots图</h2><p>根据seqtar结果，得到m文件以及alignment文件</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="comment"># 需要准备的文件：==&gt; 首先是准备 miRNA 的 ID 和 REF 的 ID，就是 seqtar 的最后一步的 redundant 的文件的前三列，命名为 miRNA-seqtar-message.txt</span></div><div class="line"><span class="comment"># 程序主要功能，将绘制 t-plots 的文件进行整理，整理结果是每一个 miRNA 所对应的 Ref 位点和绘制 t-plots 图的matlab文件放在一个目录下，目录名称为  ”miRNA名称_Ref_位点名称“</span></div><div class="line"><span class="comment"># 检查 miRNA 的文件的重复，需要 unique 的 miRMA ID (文件 miRNA.fa 不能有重复的 ID )</span></div><div class="line"><span class="comment"># 注意！！！ ==&gt; 该脚本是针对每一个 miRNA 只有一个靶点进行摘取信息。当 miRNA 有多个的 Ref 的靶点的时候（即第三列的数值 &gt; 1 ）,该情况下的 miRNA 信息会被导出到文件 “more-than-one-Ref.txt”  中，需要手动摘取信息。</span></div><div class="line"></div><div class="line"><span class="comment"># 使用方式： </span></div><div class="line"><span class="comment"># 1、在 seqtar 第九步（step9）目录下，新建一个文件夹，命名 t-plots</span></div><div class="line"><span class="comment"># 2、将脚本和准备好的文件 miRNA-seqtar-message.txt 放在该目录下</span></div><div class="line"><span class="comment"># 2、sh t-plots.sh &amp; &gt; sh.log</span></div><div class="line"></div><div class="line">s=`wc -l seqtar-message.txt | awk <span class="string">'&#123;print $1&#125;'</span>`</div><div class="line"><span class="keyword">for</span> (( i=1; i&lt;=s; i=i+1 ))</div><div class="line"></div><div class="line"><span class="keyword">do</span> </div><div class="line">	Query=$(sed -n <span class="string">"<span class="variable">$i</span>"</span>p seqtar-message.txt | awk <span class="string">'&#123;print $1&#125;'</span>)</div><div class="line">	Ref=$(sed -n <span class="string">"<span class="variable">$i</span>"</span>p seqtar-message.txt | awk <span class="string">'&#123;print $2&#125;'</span>)</div><div class="line">	Var=$(sed -n <span class="string">"<span class="variable">$i</span>"</span>p seqtar-message.txt | awk <span class="string">'&#123;print $3&#125;'</span>)</div><div class="line">	<span class="keyword">if</span> [ <span class="variable">$Var</span> -eq 1 ]</div><div class="line">	<span class="keyword">then</span></div><div class="line">		FileNum=$(grep <span class="variable">$Query</span> ../run*/*ed | awk -F <span class="string">"[/,:]"</span> <span class="string">'&#123;print $3&#125;'</span> | tr -<span class="built_in">cd</span> [0-9])</div><div class="line">		RunNum=$(grep <span class="variable">$Query</span> ../run*/*ed | awk -F <span class="string">"[/]"</span> <span class="string">'&#123;print $2&#125;'</span> | tr -<span class="built_in">cd</span> [0-9])</div><div class="line"></div><div class="line"><span class="comment">#		cd ../run$RunNum </span></div><div class="line">	        mkdir  <span class="string">"<span class="variable">$Query</span>"</span>_Ref_<span class="string">"<span class="variable">$Ref</span>"</span></div><div class="line">		</div><div class="line">		grep -w <span class="string">"<span class="variable">$Query</span> on Ref: <span class="variable">$Ref</span>"</span> ../run<span class="variable">$RunNum</span>/uniq-miRNA<span class="variable">$FileNum</span>-cdna.seqtar -A 10 -B 1 &gt; ./<span class="string">"<span class="variable">$Query</span>"</span>_Ref_<span class="string">"<span class="variable">$Ref</span>"</span>/<span class="string">"<span class="variable">$Query</span>"</span>_Ref_<span class="string">"<span class="variable">$Ref</span>"</span>.txt</div><div class="line">		grep  <span class="string">"<span class="variable">$Ref</span>"</span> ../run<span class="variable">$RunNum</span>/uniq-miRNA<span class="variable">$FileNum</span>-cdna-reads-distr.m -A 3 | sed <span class="string">'$d'</span> |sed <span class="string">'s/\.jpeg/\.jpg/g'</span> |sed <span class="string">'s/|/\_/g'</span> |sed <span class="string">'/XLabel/s/\_/\\_/g'</span> |sed <span class="string">'/title/s/\_/\\_/g'</span> &gt; ./<span class="string">"<span class="variable">$Query</span>"</span>_Ref_<span class="string">"<span class="variable">$Ref</span>"</span>/<span class="string">"<span class="variable">$Query</span>"</span>_Ref_<span class="string">"<span class="variable">$Ref</span>"</span>.m</div><div class="line">	<span class="keyword">else</span></div><div class="line">		sed -n <span class="string">"<span class="variable">$i</span>"</span>p seqtar-message.txt &gt;&gt; more-than-one-Ref.txt</div><div class="line">	<span class="keyword">fi</span></div><div class="line"><span class="keyword">done</span></div></pre></td></tr></table></figure>
+<p>修改alignment文件，交换Query行与Ref行，并修改每个文件中的Ref与Query：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#!/bin/bash</span></div><div class="line"><span class="keyword">for</span> file <span class="keyword">in</span> `ls *.txt`</div><div class="line"><span class="keyword">do</span></div><div class="line">    lines=`wc -l <span class="variable">$file</span>|awk <span class="string">'&#123;print $1&#125;'</span>`</div><div class="line">    filename=<span class="variable">$file</span></div><div class="line">    <span class="keyword">if</span> [ <span class="variable">$lines</span> -eq 12 ]</div><div class="line">    <span class="keyword">then</span></div><div class="line">        sed -i <span class="string">'/$query/&#123;:a;N;/Ref/!ba;/[^\n]*$query[^\n]*\n[^\n]*Ref[^\n]*$/&#123;s/\([^\n]*$query[^\n]*\)\n\(.*\)/\2\n\1/;&#125;;s/\([^\n]*\)\n\(.*\)\n\(.*\)/\3\n\2\n\1/&#125;'</span> <span class="variable">$file</span></div><div class="line">        query=`sed -n <span class="string">'5p'</span> <span class="variable">$file</span> |cut -f 2`</div><div class="line">        ref=`sed -n <span class="string">'5p'</span> <span class="variable">$file</span> |cut -f 3`</div><div class="line">        sed -i <span class="string">"s/Ref\./<span class="variable">$ref</span>/g"</span> <span class="variable">$file</span></div><div class="line">        sed -i <span class="string">"s/Query/<span class="variable">$query</span>/g"</span> <span class="variable">$file</span></div><div class="line">    <span class="keyword">else</span></div><div class="line">        <span class="built_in">echo</span> <span class="variable">$file</span> <span class="string">"need to change manually"</span></div><div class="line">    <span class="keyword">fi</span></div><div class="line"><span class="keyword">done</span></div></pre></td></tr></table></figure>
+<p>讲m文件放到matlab中画图</p>
+
+      
+    </div>
+    
+    
+    
+      <div>
+        
+        <div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------------本文结束<i class="fa fa-paw"></i>感谢您的阅读-------------</div>
+    
+</div>
+
+        
+      </div>
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/seqtar/" rel="tag"><i class="fa fa-tag"></i> seqtar</a>
+          
+            <a href="/tags/rose/" rel="tag"><i class="fa fa-tag"></i> rose</a>
+          
+            <a href="/tags/script/" rel="tag"><i class="fa fa-tag"></i> script</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/GO-tair10-methylation/" rel="next" title="GO--tair10(methylation)">
+                <i class="fa fa-chevron-left"></i> GO--tair10(methylation)
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="uyan_frame"></div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.gif"
+               alt="Guo Junqiang" />
+          <p class="site-author-name" itemprop="name">Guo Junqiang</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/">
+                <span class="site-state-item-count">5</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">2</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">9</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/gjq0724/" target="_blank" title="github">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                    
+                      github
+                    
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/gjq0724" target="_blank" title="weibo">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                    
+                      weibo
+                    
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#运行seqtar程序"><span class="nav-number">1.</span> <span class="nav-text">运行seqtar程序</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#整理seqtar结果，画t-plots图"><span class="nav-number">2.</span> <span class="nav-text">整理seqtar结果，画t-plots图</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Guo Junqiang</span>
+</div>
+
+
+<!--<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Muse
+  </a>
+</div>-->
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+
+  
+</div>
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+  
+  <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+    
+
+    
+      <!-- UY BEGIN -->
+      <script type="text/javascript" src="http://v2.uyan.cc/code/uyan.js?uid=2142429"></script>
+      <!-- UY END -->
+    
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+
+  
+  
+
+
+  
+
+  
+
+</body>
+</html>
