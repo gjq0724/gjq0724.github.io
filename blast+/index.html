@@ -109,7 +109,7 @@
 <meta property="og:site_name" content="The Future is in Our Hands">
 <meta property="og:description" content="blast+ 安装与使用NCBI 的 blast软件是做生物信息学分析最常用的工具之一，是用C语言编写的。随着技术的发展，NCBI于09年发布了blast的升级版本blast+，并强烈建议放弃blast。blast+使用了blast的核心算法，延续了blast的优势功能，同事在运算速度上有了很大的提升。在此介绍一下linux系统下blast+的配置与使用方法，以供大家参考。 安装配置blast+程">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2017-09-19T10:05:50.414Z">
+<meta property="og:updated_time" content="2017-09-25T07:42:16.255Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="blast+安装与使用">
 <meta name="twitter:description" content="blast+ 安装与使用NCBI 的 blast软件是做生物信息学分析最常用的工具之一，是用C语言编写的。随着技术的发展，NCBI于09年发布了blast的升级版本blast+，并强烈建议放弃blast。blast+使用了blast的核心算法，延续了blast的优势功能，同事在运算速度上有了很大的提升。在此介绍一下linux系统下blast+的配置与使用方法，以供大家参考。 安装配置blast+程">
@@ -404,7 +404,7 @@
 <p>保存并退出后更新一下环境变量：</p>
 <figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">source</span> ~/.bashrc</div></pre></td></tr></table></figure>
 <p>配置完成后可以用以下命令验证并查看一下当前blast+版本信息：</p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">blsatx -version</div></pre></td></tr></table></figure>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">blastx -version</div></pre></td></tr></table></figure>
 <h2 id="blast-的使用"><a href="#blast-的使用" class="headerlink" title="blast+的使用"></a>blast+的使用</h2><ul>
 <li><p>格式化数据库</p>
 <p>将本地的核酸或者蛋白数据库格式化创建索引</p>
@@ -434,7 +434,7 @@
 <p>参数说明：</p>
 <p>-query: 输入文件路径及文件名</p>
 <p>-out：输出文件名</p>
-<p>-db: 格式化了的数据库及数据库</p>
+<p>-db: 格式化了的数据库</p>
 <p>-outfmt: 输出文件格式，共有十二种格式，其中 <strong>6</strong> 是blast对应的-m 8格式</p>
 <p>-evalue: 设置输出结果的阈值</p>
 <p>-num_descriptions: 输出结果的个数</p>
