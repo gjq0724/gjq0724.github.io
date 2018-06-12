@@ -1,6 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[bioperl安装(无需root权限)]]></title>
+    <url>%2Fbioperl%E5%AE%89%E8%A3%85%2F</url>
+    <content type="text"><![CDATA[###bioperl 安装（cpan）1) perl -MCPAN -e shell 一路回车，安装完成后q退出1234567source ~/.bashrc&gt;cpancpan&gt;install Module::Buildcpan&gt;o conf prefer_installer MBcpan&gt;o conf commitcpan&gt;q 2) 下载bioperl(wget https://github.com/bioperl/bioperl-live/archive/master.zip)并解压：unzip master.zip3) 进入解压后的目录安装123 perl Build.PL --install_base=~/perl5/Bioperl/ 指定安装目录，可自行修改./Build test./Build install 中间一直敲回车即可，若无报错，则安装完成 ##blastxml安装1) 下载blastxml(wget http://search.cpan.org/CPAN/authors/id/C/CJ/CJFIELDS/Bio-SearchIO-blastxml-1.70.tar.gz)并解压2) 进入解压后的目录安装123perl Makefile.PL --install_base ~/perl/lib/perl/Bio/SearchIO/make make install]]></content>
+      <categories>
+        <category>software</category>
+      </categories>
+      <tags>
+        <tag>bioperl</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[vcftools]]></title>
     <url>%2Fvcftools%2F</url>
     <content type="text"><![CDATA[vcftools 安装与使用安装###获取vcftools软件包12wget https://ncu.dl.sourceforge.net/project/vcftools/vcftools_0.1.13.tar.gztar -zxvf vcftools_0.1.13.tar.gz ###安装vcftools123cd vcftools_0.1.13.tar.gzmakemake install ##使用 ###参考链接（http://vcftools.sourceforge.net/man_latest.html#DESCRIPTION)Output allele frequency for all sites in the input vcf file from chromosome 11vcftools --gzvcf input_file.vcf.gz --freq --chr 1 --out chr1_analysis Output a new vcf file from the input vcf file that removes any indel sites 1vcftools --vcf input_file.vcf --remove-indels --recode --recode-INFO-all --out SNPs_only Output file comparing the sites in two vcf files 1vcftools --gzvcf input_file1.vcf.gz --gzdiff input_file2.vcf.gz --diff-site --out in1_v_in2 Output a new vcf file to standard out without any sites that have a filter tag, then compress it with gzip 1vcftools --gzvcf input_file.vcf.gz --remove-filtered-all --recode --stdout | gzip -c &gt; output_PASS_only.vcf.gz Output a Hardy-Weinberg p-value for every site in the bcf file that does not have any missing genotypes 1vcftools --bcf input_file.bcf --hardy --max-missing 1.0 --out output_noMissing Output nucleotide diversity at a list of positions 1zcat input_file.vcf.gz | vcftools --vcf - --site-pi --positions SNP_list.txt --out nucleotide_diversity]]></content>
